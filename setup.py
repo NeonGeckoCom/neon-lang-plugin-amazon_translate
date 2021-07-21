@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 from setuptools import setup
 
-PLUGIN_ENTRY_POINT = 'amazontranslate_plug = amazontranslate_neon_plugin:AmazonTranslatePlugin'
+PLUGIN_ENTRY_POINT = 'amazontranslate_plug = amazontranslate_neon_plugin:AmazonTranslator'
 
-DETECT_PLUGIN_ENTRY_POINT = 'amazontranslate_detection_plug = amazontranslate_neon_plugin:AmazonTranslateDetectPlugin'
+DETECT_PLUGIN_ENTRY_POINT = 'amazontranslate_detection_plug = amazontranslate_neon_plugin:AmazonDetector'
 
 setup(
     name='amazontranslate_neon_plugin',
-    version='0.0.1',
+    version='0.0.1post1',
     description='',
     url='',
     author='JarbasAi',
