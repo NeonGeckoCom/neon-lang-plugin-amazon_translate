@@ -35,7 +35,7 @@ class AmazonTranslator(LanguageTranslator):
         self.client = boto3.Session(
             aws_access_key_id=self.keys.get("aws_access_key_id") or self.keys.get("key_id"),
             aws_secret_access_key=self.keys.get("aws_secret_access_key") or self.keys.get("secret_key"),
-            region_name=self.keys["region"]).client('translate')
+            region_name=self.keys.get("region", "us-west-2")).client('translate')
 
     def translate(self, text, target=None, source="auto"):
         target = target or self.internal_language
@@ -55,7 +55,7 @@ class AmazonDetector(LanguageDetector):
         self.client = boto3.Session(
             aws_access_key_id=self.keys.get("aws_access_key_id") or self.keys.get("key_id"),
             aws_secret_access_key=self.keys.get("aws_secret_access_key") or self.keys.get("secret_key"),
-            region_name=self.keys["region"]).client('comprehend')
+            region_name=self.keys.get("region", "us-west-2")).client('comprehend')
 
     def detect(self, text):
         response = self.client.detect_dominant_language(
