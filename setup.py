@@ -1,21 +1,52 @@
 #!/usr/bin/env python3
 from setuptools import setup
+from os import getenv, path
 
 PLUGIN_ENTRY_POINT = 'amazontranslate_plug = amazontranslate_neon_plugin:AmazonTranslatePlugin'
-
 DETECT_PLUGIN_ENTRY_POINT = 'amazontranslate_detection_plug = amazontranslate_neon_plugin:AmazonTranslateDetectPlugin'
 
+
+def get_requirements(requirements_filename: str):
+    requirements_file = path.join(path.abspath(path.dirname(__file__)), "requirements", requirements_filename)
+    with open(requirements_file, 'r', encoding='utf-8') as r:
+        requirements = r.readlines()
+    requirements = [r.strip() for r in requirements if r.strip() and not r.strip().startswith("#")]
+
+    for i in range(0, len(requirements)):
+        r = requirements[i]
+        if "@" in r:
+            parts = [p.lower() if p.strip().startswith("git+http") else p for p in r.split('@')]
+            r = "@".join(parts)
+        if getenv("GITHUB_TOKEN"):
+            if "github.com" in r:
+                requirements[i] = r.replace("github.com", f"{getenv('GITHUB_TOKEN')}@github.com")
+    return requirements
+
+
+with open("README.md", "r") as f:
+    long_description = f.read()
+
+with open("./version.py", "r", encoding="utf-8") as v:
+    for line in v.readlines():
+        if line.startswith("__version__"):
+            if '"' in line:
+                version = line.split('"')[1]
+            else:
+                version = line.split("'")[1]
+
+
 setup(
-    name='amazontranslate_neon_plugin',
-    version='0.0.1',
-    description='',
-    url='',
-    author='JarbasAi',
-    author_email='jarbasai@mailfence.com',
-    license='Apache-2.0',
-    packages=['amazontranslate_neon_plugin'],
-    install_requires=["ovos-plugin-manager>=0.0.1a2",
-                      "boto3"],
+    name='neon-lang-plugin-amazon-translate',
+    version=version,
+    description='Amazon Translate Language Plugin',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/NeonGeckoCom/neon-lang-plugin-amazon_translate',
+    author='Neongecko',
+    author_email='developers@neon.ai',
+    license='BSD-3-Clause',
+    packages=['neon_lang_plugin_amazon_translate'],
+    install_requires=get_requirements("requirements.txt"),
     zip_safe=True,
     classifiers=[
         'Development Status :: 3 - Alpha',

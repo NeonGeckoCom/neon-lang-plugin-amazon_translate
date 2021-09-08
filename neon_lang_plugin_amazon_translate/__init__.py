@@ -6,7 +6,7 @@ import boto3
 class AmazonTranslator(LanguageTranslator):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.keys = self.config["keys"]["amazon"]
+        self.keys = self.config.get("keys", self.config).get("amazon", self.config)
         self.client = boto3.Session(
             aws_access_key_id=self.keys["key_id"],
             aws_secret_access_key=self.keys["secret_key"],
@@ -26,6 +26,7 @@ class AmazonTranslator(LanguageTranslator):
 class AmazonDetector(LanguageDetector):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.keys = self.config.get("keys", self.config).get("amazon", self.config)
         self.keys = self.config["keys"]["amazon"]
         self.client = boto3.Session(
             aws_access_key_id=self.keys["key_id"],
