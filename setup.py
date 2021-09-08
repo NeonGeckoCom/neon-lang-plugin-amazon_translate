@@ -27,8 +27,8 @@
 from setuptools import setup
 from os import getenv, path
 
-PLUGIN_ENTRY_POINT = 'amazontranslate_plug = amazontranslate_neon_plugin:AmazonTranslatePlugin'
-DETECT_PLUGIN_ENTRY_POINT = 'amazontranslate_detection_plug = amazontranslate_neon_plugin:AmazonTranslateDetectPlugin'
+PLUGIN_ENTRY_POINT = 'amazontranslate_plug = neon_lang_plugin_amazon_translate:AmazonTranslator'
+DETECT_PLUGIN_ENTRY_POINT = 'amazontranslate_detection_plug = neon_lang_plugin_amazon_translate:AmazonDetector'
 
 
 def get_requirements(requirements_filename: str):
