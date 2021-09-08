@@ -33,8 +33,8 @@ class AmazonTranslator(LanguageTranslator):
         super().__init__(*args, **kwargs)
         self.keys = self.config.get("keys", self.config).get("amazon", self.config)
         self.client = boto3.Session(
-            aws_access_key_id=self.keys["key_id"],
-            aws_secret_access_key=self.keys["secret_key"],
+            aws_access_key_id=self.keys.get("aws_access_key_id") or self.keys.get("key_id"),
+            aws_secret_access_key=self.keys.get("aws_secret_access_key") or self.keys.get("secret_key"),
             region_name=self.keys["region"]).client('translate')
 
     def translate(self, text, target=None, source="auto"):
@@ -53,8 +53,8 @@ class AmazonDetector(LanguageDetector):
         super().__init__(*args, **kwargs)
         self.keys = self.config.get("keys", self.config).get("amazon", self.config)
         self.client = boto3.Session(
-            aws_access_key_id=self.keys["key_id"],
-            aws_secret_access_key=self.keys["secret_key"],
+            aws_access_key_id=self.keys.get("aws_access_key_id") or self.keys.get("key_id"),
+            aws_secret_access_key=self.keys.get("aws_secret_access_key") or self.keys.get("secret_key"),
             region_name=self.keys["region"]).client('comprehend')
 
     def detect(self, text):
