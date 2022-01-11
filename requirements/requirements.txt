@@ -1,2 +1,4 @@
-ovos-plugin-manager>=0.0.1a2
-boto3
+ovos-plugin-manager~=0.0.1
+boto3~=1.15
+# TODO: Below patches a missing dependency in OPM DM
+SpeechRecognition~=3.8
